@@ -104,20 +104,21 @@ else:
     def login(request: Request):
         data = request.json() or {}
         password = data.get("password", "")
-        # Primeiro acesso: define a senha.
+        # Primeiro acesso: define o PIN.
         if not auth.is_configured():
-            if len(password) < 4:
-                return JSONResponse(request, {"error": "senha muito curta (min 4)"},
+            if not auth.is_valid_pin(password):
+                return JSONResponse(request, {"error": "PIN deve ter 4 digitos"},
                                     status=(400, "Bad Request"))
             if not auth.set_password(password):
-                return JSONResponse(request, {"error": "falha ao gravar senha"},
+                return JSONResponse(request, {"error": "falha ao gravar PIN"},
                                     status=(500, "Server Error"))
         elif not auth.check_password(password):
-            return JSONResponse(request, {"error": "senha invalida"},
+            return JSONResponse(request, {"error": "PIN invalido"},
                                 status=(401, "Unauthorized"))
         token = auth.create_session()
         return JSONResponse(request, {"ok": True}, headers={
-            "Set-Cookie": "session=%s; Path=/; SameSite=Lax" % token,
+            "Set-Cookie": "session=%s; Path=/; Max-Age=%d; SameSite=Lax" % (
+                token, auth.SESSION_TTL),
         })
 
     @server.route("/api/logout", POST)
@@ -133,8 +134,8 @@ else:
             return _unauthorized(request)
         data = request.json() or {}
         new = data.get("password", "")
-        if len(new) < 4:
-            return JSONResponse(request, {"error": "senha muito curta (min 4)"},
+        if not auth.is_valid_pin(new):
+            return JSONResponse(request, {"error": "PIN deve ter 4 digitos"},
                                 status=(400, "Bad Request"))
         if not auth.set_password(new):
             return JSONResponse(request, {"error": "falha ao gravar"},

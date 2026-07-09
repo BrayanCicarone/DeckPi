@@ -391,3 +391,53 @@ input[type="color"] { padding: 4px; height: 42px; }
 .msg { font-size: .85rem; margin-top: 12px; min-height: 1.2em; }
 .msg.err { color: var(--red); }
 .msg.ok { color: var(--green); }
+
+/* ---------- PIN pad (estilo cofre / bloqueio de iPhone) ---------- */
+.pinpad { display: flex; flex-direction: column; align-items: center; gap: 26px; }
+
+.pin-dots { display: flex; gap: 18px; }
+.pin-dot {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--text-dim);
+  background: transparent;
+  transition: background .15s, border-color .15s, transform .15s;
+}
+.pin-dot.filled {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: scale(1.1);
+}
+
+.pin-keys {
+  display: grid;
+  grid-template-columns: repeat(3, 64px);
+  gap: 14px;
+  justify-content: center;
+}
+.pin-key {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-elev);
+  color: var(--text);
+  font-size: 1.4rem;
+  font-weight: 600;
+  display: grid;
+  place-items: center;
+  transition: background .12s, transform .08s;
+}
+.pin-key:active { transform: scale(.94); background: var(--accent); color: #fff; }
+.pin-key-empty { visibility: hidden; }
+.pin-key-back { background: transparent; border-color: transparent; color: var(--text-dim); }
+.pin-key-back svg { width: 22px; height: 22px; }
+.pin-key-back:active { background: var(--bg-elev); color: var(--text); }
+
+@keyframes pinShake {
+  10%, 90% { transform: translateX(-2px); }
+  20%, 80% { transform: translateX(4px); }
+  30%, 50%, 70% { transform: translateX(-8px); }
+  40%, 60% { transform: translateX(8px); }
+}
+.pinpad.shake .pin-dots { animation: pinShake .5s; }
+.pinpad.shake .pin-dot { border-color: var(--red); }

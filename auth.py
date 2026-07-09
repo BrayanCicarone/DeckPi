@@ -18,7 +18,7 @@ except (ImportError, AttributeError):
     import adafruit_hashlib as hashlib
 
 AUTH_PATH = "/auth.json"
-SESSION_TTL = 8 * 60 * 60  # 8 horas em segundos
+SESSION_TTL = 7 * 24 * 60 * 60  # 7 dias em segundos
 
 # Sessoes ativas: token (str) -> expiracao (time.monotonic)
 _sessions = {}
@@ -33,6 +33,11 @@ def _hash_password(password, salt_hex):
     h.update(salt_hex.encode("utf-8"))
     h.update(password.encode("utf-8"))
     return _hex(h.digest())
+
+
+def is_valid_pin(pin):
+    """PIN deve ter exatamente 4 digitos numericos."""
+    return isinstance(pin, str) and len(pin) == 4 and pin.isdigit()
 
 
 def is_configured():

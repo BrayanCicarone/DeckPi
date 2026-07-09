@@ -607,7 +607,7 @@ function openMenu() {
 
   const pwd = document.createElement('button');
   pwd.className = 'btn';
-  pwd.innerHTML = icon('key') + ' Trocar senha';
+  pwd.innerHTML = icon('key') + ' Trocar PIN';
   pwd.onclick = changePassword;
 
   const out = document.createElement('button');
@@ -624,18 +624,47 @@ function changePassword() {
   const body = document.createElement('div');
   body.style.display = 'flex';
   body.style.flexDirection = 'column';
+  body.style.alignItems = 'center';
   body.style.gap = '14px';
-  const np = document.createElement('input');
-  np.type = 'password';
-  np.placeholder = 'Mínimo 4 caracteres';
-  body.appendChild(field('Nova senha', np));
-  openModal('Trocar senha', body, async () => {
-    if (np.value.length < 4) { toast('Senha muito curta', 'err'); return false; }
-    const r = await api('/api/password', { method: 'POST', body: JSON.stringify({ password: np.value }) });
-    const d = await r.json();
-    if (r.ok && d.ok) toast('Senha alterada', 'ok');
-    else { toast(d.error || 'Falha', 'err'); return false; }
+
+  const msg = document.createElement('div');
+  msg.className = 'msg';
+  msg.textContent = 'Digite o novo PIN (4 dígitos)';
+  body.appendChild(msg);
+
+  let firstPin = null;
+  const pad = createPinPad({
+    onSubmit: async (pin) => {
+      if (!firstPin) {
+        firstPin = pin;
+        msg.className = 'msg';
+        msg.textContent = 'Confirme o novo PIN';
+        pad.reset();
+        return;
+      }
+      if (pin !== firstPin) {
+        msg.className = 'msg err';
+        msg.textContent = 'PIN não confere. Digite o novo PIN novamente.';
+        pad.shake();
+        firstPin = null;
+        return;
+      }
+      const r = await api('/api/password', { method: 'POST', body: JSON.stringify({ password: pin }) });
+      const d = await r.json();
+      if (r.ok && d.ok) {
+        toast('PIN alterado', 'ok');
+        closeModal();
+      } else {
+        msg.className = 'msg err';
+        msg.textContent = d.error || 'Falha ao trocar o PIN.';
+        pad.shake();
+        firstPin = null;
+      }
+    },
   });
+  body.appendChild(pad.el);
+
+  openModal('Trocar PIN', body, null);
 }
 
 // ---------------------------------------------------------------------------
