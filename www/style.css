@@ -235,12 +235,14 @@ main { padding: 8px 16px 80px; max-width: 1100px; margin: 0 auto; }
 .grid {
   display: grid;
   /* largura máxima limitada: em telas largas (landscape/desktop) os cards
-     não esticam e ficam achatados — só cabem mais colunas por linha. */
-  grid-template-columns: repeat(auto-fill, minmax(68px, 88px));
-  grid-auto-rows: minmax(68px, auto);
+     não esticam e ficam achatados — só cabem mais colunas por linha.
+     Mínimo baixo o bastante para 4 colunas (2 Grandes lado a lado) caberem
+     mesmo em celular estreito na vertical. */
+  grid-template-columns: repeat(auto-fill, minmax(60px, 84px));
+  grid-auto-rows: minmax(60px, auto);
   grid-auto-flow: dense;
   justify-content: start;
-  gap: 10px;
+  gap: 8px;
 }
 
 /* Tamanhos de macro: sm = compacto 1x1, md = tira 2x1, lg = padrão (2x2) */
@@ -267,9 +269,9 @@ main { padding: 8px 16px 80px; max-width: 1100px; margin: 0 auto; }
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  min-height: 68px;
-  padding: 8px 6px;
+  gap: 3px;
+  min-height: 60px;
+  padding: 6px 5px;
   border-radius: var(--radius);
   border: 1px solid var(--border);
   background: var(--bg-card);
