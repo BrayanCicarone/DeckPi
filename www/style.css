@@ -30,6 +30,12 @@
 
 * { box-sizing: border-box; }
 
+html, body {
+  /* impede o zoom por toque duplo (comum em botões clicados rápido);
+     mantém o pinça-zoom disponível para acessibilidade */
+  touch-action: manipulation;
+}
+
 body {
   margin: 0;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -90,6 +96,8 @@ button { font-family: inherit; cursor: pointer; }
 .icon-btn:hover { border-color: var(--accent); color: var(--accent-h); }
 .icon-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 .icon-btn svg { width: 18px; height: 18px; }
+.icon-btn.spinning svg { animation: spin .7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
 
 /* ---------- Botao mini (acoes em perfis/grupos/cards/passos) ---------- */
 .mini {
@@ -106,6 +114,39 @@ button { font-family: inherit; cursor: pointer; }
 .mini:hover { border-color: var(--accent); color: var(--accent-h); }
 .mini svg { width: 15px; height: 15px; }
 .mini.del:hover { color: var(--red); border-color: var(--red); }
+.mini:disabled { opacity: .3; pointer-events: none; }
+
+/* Reordenação inline nas abas de perfil (modo edição) */
+.profile-tab-wrap { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+
+/* ---------- Arrastar (reordenar) e redimensionar ---------- */
+.drag-handle, .resize-handle {
+  touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.drag-handle { cursor: grab; }
+.drag-handle:active { cursor: grabbing; }
+.resize-handle { cursor: nwse-resize; }
+
+/* handle de arraste no cartão de macro (canto superior esquerdo) */
+.macro .drag-handle { position: absolute; bottom: 6px; left: 6px; }
+/* handle de redimensionar no cartão de macro (canto inferior direito) */
+.macro .resize-handle { position: absolute; bottom: 6px; right: 6px; }
+
+.dragging {
+  opacity: .92;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, .45);
+  transform: scale(1.02);
+}
+.drag-placeholder {
+  border: 2px dashed var(--accent);
+  border-radius: var(--radius);
+  background: rgba(99, 102, 241, .08);
+}
+.macro.drag-placeholder { background: rgba(99, 102, 241, .08); }
+.resizing { outline: 2px dashed var(--accent); outline-offset: 2px; }
 
 /* Paleta de teclas no editor de combo */
 .key-palette { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
@@ -162,6 +203,8 @@ button { font-family: inherit; cursor: pointer; }
   transition: .15s;
 }
 .profile-tab .em { font-size: 1.1rem; }
+/* quando um ícone SVG (não emoji) cai num span .em, escala com o texto ao redor */
+.em svg { width: 1em; height: 1em; vertical-align: -0.15em; }
 .profile-tab.active {
   color: #fff;
   background: linear-gradient(135deg, var(--accent), var(--accent-h));
@@ -191,9 +234,31 @@ main { padding: 8px 16px 80px; max-width: 1100px; margin: 0 auto; }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 12px;
+  /* largura máxima limitada: em telas largas (landscape/desktop) os cards
+     não esticam e ficam achatados — só cabem mais colunas por linha. */
+  grid-template-columns: repeat(auto-fill, minmax(68px, 88px));
+  grid-auto-rows: minmax(68px, auto);
+  grid-auto-flow: dense;
+  justify-content: start;
+  gap: 10px;
 }
+
+/* Tamanhos de macro: sm = compacto 1x1, md = tira 2x1, lg = padrão (2x2) */
+.macro[data-size="md"] {
+  grid-column: span 2;
+  flex-direction: row;
+  justify-content: flex-start;
+  text-align: left;
+  gap: 10px;
+  padding-left: 14px;
+}
+.macro[data-size="lg"] { grid-column: span 2; grid-row: span 2; }
+.macro[data-size="md"] .glyph { font-size: 1.6rem; flex-shrink: 0; }
+.macro[data-size="md"] .glyph svg { width: 28px; height: 28px; }
+.macro[data-size="md"] .label { font-size: .78rem; }
+.macro[data-size="lg"] .glyph { font-size: 2rem; }
+.macro[data-size="lg"] .glyph svg { width: 34px; height: 34px; }
+.macro[data-size="lg"] .label { font-size: .9rem; }
 
 /* ---------- Cartao de macro ---------- */
 .macro {
@@ -202,9 +267,9 @@ main { padding: 8px 16px 80px; max-width: 1100px; margin: 0 auto; }
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  min-height: 110px;
-  padding: 16px 12px;
+  gap: 4px;
+  min-height: 68px;
+  padding: 8px 6px;
   border-radius: var(--radius);
   border: 1px solid var(--border);
   background: var(--bg-card);
@@ -222,25 +287,25 @@ main { padding: 8px 16px 80px; max-width: 1100px; margin: 0 auto; }
 }
 .macro:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--macro-color, var(--accent)); }
 .macro:active { transform: translateY(-1px) scale(.98); }
-.macro .glyph { font-size: 2rem; line-height: 1; }
-.macro .glyph svg { width: 34px; height: 34px; }
-.macro .label { font-weight: 600; font-size: .9rem; word-break: break-word; }
+.macro .glyph { font-size: 1.3rem; line-height: 1; }
+.macro .glyph svg { width: 22px; height: 22px; }
+.macro .label { font-weight: 600; font-size: .68rem; word-break: break-word; }
 .macro.flash-ok { animation: flashOk .5s; }
 .macro.flash-err { animation: flashErr .5s; }
 @keyframes flashOk { 0% { box-shadow: 0 0 0 0 var(--green); } 100% { box-shadow: 0 0 0 6px transparent; } }
 @keyframes flashErr { 0% { box-shadow: 0 0 0 0 var(--red); } 100% { box-shadow: 0 0 0 6px transparent; } }
 
 /* Mini-acoes de edicao no cartao */
-.macro .edit-badges { position: absolute; top: 6px; right: 6px; display: flex; gap: 4px; }
+.macro .edit-badges { position: absolute; top: 6px; right: 6px; display: flex; gap: 3px; }
 .macro .mini {
   display: grid; place-items: center;
-  width: 26px; height: 26px;
-  border-radius: 8px;
+  width: 22px; height: 22px;
+  border-radius: 7px;
   border: none;
   background: rgba(0,0,0,.35);
   color: #fff;
 }
-.macro .mini svg { width: 14px; height: 14px; }
+.macro .mini svg { width: 12px; height: 12px; }
 .macro .mini:hover { background: var(--accent); }
 
 /* Cartao "adicionar" */
@@ -322,6 +387,29 @@ input[type="color"] { padding: 4px; height: 42px; }
 .emoji-palette button { font-size: 1.2rem; border: none; background: transparent; padding: 4px 6px; border-radius: 8px; }
 .emoji-palette button:hover { background: var(--bg-elev); }
 
+/* Seletor de tamanho do botão (Pequeno / Médio / Grande) */
+.size-picker { display: flex; gap: 8px; }
+.size-opt {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-elev);
+  color: var(--text-dim);
+  font-size: .78rem;
+  font-weight: 600;
+}
+.size-opt.active { border-color: var(--accent); color: var(--text); background: var(--bg-card); }
+.size-swatch { display: block; border-radius: 4px; background: var(--text-dim); }
+.size-opt.active .size-swatch { background: var(--accent); }
+.size-swatch.size-sm { width: 20px; height: 20px; }
+.size-swatch.size-md { width: 34px; height: 18px; }
+.size-swatch.size-lg { width: 30px; height: 30px; }
+
 /* Editor de passos */
 .steps { display: flex; flex-direction: column; gap: 10px; }
 .step {
@@ -335,6 +423,20 @@ input[type="color"] { padding: 4px; height: 42px; }
 }
 .step-top { display: flex; align-items: center; gap: 8px; }
 .step-top select { flex: 1; }
+.step-delay {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 6px;
+  margin-top: 2px;
+  border-top: 1px dashed var(--border);
+}
+.step-delay label { font-size: .72rem; color: var(--text-dim); white-space: nowrap; }
+.step-delay input {
+  width: 100px;
+  padding: 5px 8px;
+  font-size: .82rem;
+}
 .step .mini { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text); display: grid; place-items: center; }
 .step .mini svg { width: 14px; height: 14px; }
 .step .mini.del:hover { color: var(--red); border-color: var(--red); }

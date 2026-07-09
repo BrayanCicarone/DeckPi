@@ -14,6 +14,9 @@ auth.json
 main.py
 .micropico
 
+# Python (gerado por checagens locais de sintaxe)
+__pycache__/
+
 # SO
 .DS_Store
 Thumbs.db

@@ -141,4 +141,9 @@ def run_steps(steps, os_name="windows", default_delay_ms=30, launch_method="sear
                 print("[executor] passo ignorado (tipo desconhecido):", kind)
         except Exception as exc:  # nunca derrubar o servidor por um passo ruim
             print("[executor] erro no passo %r: %s" % (kind, exc))
-        time.sleep(default_delay_ms / 1000)
+        # Cada passo pode sobrescrever a pausa padrao apos ele (delayAfter).
+        after = step.get("delayAfter")
+        if after is None:
+            time.sleep(default_delay_ms / 1000)
+        else:
+            time.sleep(max(0, int(after)) / 1000)

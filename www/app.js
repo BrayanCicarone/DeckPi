@@ -7,6 +7,8 @@ const ICONS = {
   grid: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>',
   sliders: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/><circle cx="9" cy="7" r="2.5" fill="currentColor" stroke="currentColor"/><circle cx="15" cy="12" r="2.5" fill="currentColor" stroke="currentColor"/><circle cx="8" cy="17" r="2.5" fill="currentColor" stroke="currentColor"/></svg>',
   edit: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
+  refresh: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg>',
+  keyboard: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M6 14h12"/></svg>',
   moon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>',
   sun: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/></svg>',
   gear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>',
@@ -15,6 +17,8 @@ const ICONS = {
   close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>',
   up: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>',
   down: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>',
+  grip: '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="8" cy="6" r="1.6"/><circle cx="16" cy="6" r="1.6"/><circle cx="8" cy="12" r="1.6"/><circle cx="16" cy="12" r="1.6"/><circle cx="8" cy="18" r="1.6"/><circle cx="16" cy="18" r="1.6"/></svg>',
+  resize: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5"/><path d="M8 21H3v-5"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>',
   save: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>',
   logout: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>',
   key: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7.5" cy="15.5" r="4.5"/><path d="m10.5 12.5 8-8M16 5l3 3M14 7l3 3"/></svg>',
@@ -115,12 +119,25 @@ function renderProfiles() {
   const nav = $('#profiles');
   nav.innerHTML = '';
   config.profiles.forEach((p) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'profile-tab-wrap';
+    wrap.dataset.id = p.id;
     const tab = document.createElement('button');
     tab.className = 'profile-tab' + (p.id === activeProfileId ? ' active' : '');
     tab.innerHTML = `<span class="em">${p.icon || '📁'}</span><span>${p.name}</span>` +
       `<span class="os-badge">${p.os === 'mac' ? '🍎' : '🪟'}</span>`;
     tab.onclick = () => { activeProfileId = p.id; render(); };
-    nav.appendChild(tab);
+    wrap.appendChild(tab);
+    if (editMode) {
+      const handle = mkMini('grip', null, 'Arrastar para reordenar');
+      handle.classList.add('drag-handle');
+      wrap.appendChild(handle);
+      makeDraggable(handle, wrap, nav, () => {
+        reconcileOrder(nav, config.profiles);
+        saveConfig().then(render);
+      });
+    }
+    nav.appendChild(wrap);
   });
   if (editMode) {
     const add = document.createElement('button');
@@ -151,7 +168,10 @@ function render() {
     main.appendChild(bar);
   }
 
-  (prof.groups || []).forEach((g) => main.appendChild(renderGroup(prof, g)));
+  const groupsWrap = document.createElement('div');
+  groupsWrap.id = 'groups-wrap';
+  (prof.groups || []).forEach((g) => groupsWrap.appendChild(renderGroup(prof, g, groupsWrap)));
+  main.appendChild(groupsWrap);
 
   if (editMode) {
     const addG = document.createElement('button');
@@ -170,9 +190,10 @@ function render() {
   }
 }
 
-function renderGroup(prof, g) {
+function renderGroup(prof, g, groupsWrap) {
   const sec = document.createElement('section');
   sec.className = 'group';
+  sec.dataset.id = g.id;
   const head = document.createElement('div');
   head.className = 'group-head';
   head.innerHTML = `<span class="em">${g.icon || '📂'}</span><h2>${g.name}</h2>` +
@@ -180,15 +201,22 @@ function renderGroup(prof, g) {
   if (editMode) {
     const acts = document.createElement('div');
     acts.className = 'group-actions';
+    const handle = mkMini('grip', null, 'Arrastar para reordenar');
+    handle.classList.add('drag-handle');
+    acts.appendChild(handle);
     acts.appendChild(mkMini('edit', () => editGroup(prof, g.id), 'Editar grupo'));
     acts.appendChild(mkMini('trash', () => deleteGroup(prof, g.id), 'Excluir grupo'));
     head.appendChild(acts);
+    makeDraggable(handle, sec, groupsWrap, () => {
+      reconcileOrder(groupsWrap, prof.groups);
+      saveConfig().then(render);
+    });
   }
   sec.appendChild(head);
 
   const grid = document.createElement('div');
   grid.className = 'grid';
-  g.buttons.forEach((b) => grid.appendChild(renderButton(prof, g, b)));
+  g.buttons.forEach((b) => grid.appendChild(renderButton(prof, g, b, grid)));
   if (editMode) {
     const add = document.createElement('button');
     add.className = 'macro add';
@@ -200,9 +228,11 @@ function renderGroup(prof, g) {
   return sec;
 }
 
-function renderButton(prof, g, b) {
+function renderButton(prof, g, b, gridEl) {
   const card = document.createElement('button');
   card.className = 'macro';
+  card.dataset.size = b.size || 'lg';
+  card.dataset.id = b.id;
   card.style.setProperty('--macro-color', b.color || 'var(--accent)');
   card.innerHTML = glyphHtml(b) + `<span class="label">${b.label || ''}</span>`;
   if (editMode) {
@@ -211,6 +241,23 @@ function renderButton(prof, g, b) {
     badges.appendChild(mkMini('edit', (e) => { e.stopPropagation(); editButton(prof, g, b.id); }, 'Editar'));
     badges.appendChild(mkMini('trash', (e) => { e.stopPropagation(); deleteButton(g, b.id); }, 'Excluir'));
     card.appendChild(badges);
+
+    const handle = mkMini('grip', null, 'Arrastar para reordenar');
+    handle.classList.add('drag-handle');
+    card.appendChild(handle);
+    makeDraggable(handle, card, gridEl, () => {
+      reconcileOrder(gridEl, g.buttons);
+      saveConfig().then(render);
+    });
+
+    const resize = mkMini('resize', null, 'Arrastar para redimensionar');
+    resize.classList.add('resize-handle');
+    card.appendChild(resize);
+    makeResizable(resize, card, (newSize) => {
+      b.size = newSize;
+      saveConfig().then(render);
+    });
+
     card.onclick = () => editButton(prof, g, b.id);
   } else {
     card.onclick = () => executeButton(prof.id, b.id, card);
@@ -218,19 +265,22 @@ function renderButton(prof, g, b) {
   return card;
 }
 
-function mkMini(ic, onclick, title) {
+function mkMini(ic, onclick, title, disabled) {
   const btn = document.createElement('button');
+  btn.type = 'button';
   btn.className = 'mini';
   btn.title = title || '';
   btn.innerHTML = icon(ic);
   btn.onclick = onclick;
+  if (disabled) btn.disabled = true;
   return btn;
 }
 
 // ---------------------------------------------------------------------------
 // Modais
 // ---------------------------------------------------------------------------
-function openModal(title, bodyEl, onSave) {
+function openModal(title, bodyEl, onSave, opts) {
+  const closeOnOverlay = !opts || opts.closeOnOverlay !== false;
   const root = $('#modal-root');
   root.innerHTML = '';
   const overlay = document.createElement('div');
@@ -247,7 +297,7 @@ function openModal(title, bodyEl, onSave) {
   foot.className = 'modal-foot';
   const cancel = document.createElement('button');
   cancel.className = 'btn';
-  cancel.textContent = 'Cancelar';
+  cancel.textContent = (opts && opts.cancelLabel) || 'Cancelar';
   cancel.onclick = closeModal;
   foot.appendChild(cancel);
   if (onSave) {
@@ -259,7 +309,7 @@ function openModal(title, bodyEl, onSave) {
   }
   modal.appendChild(foot);
   overlay.appendChild(modal);
-  overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+  overlay.addEventListener('click', (e) => { if (e.target === overlay && closeOnOverlay) closeModal(); });
   $('[data-x]', modal).onclick = closeModal;
   root.appendChild(overlay);
 }
@@ -418,6 +468,32 @@ function editButton(prof, g, id) {
   color.value = b.color || '#6366f1';
   body.appendChild(field('Cor', color));
 
+  // Tamanho do botão (destaque na grade)
+  let size = b.size || 'lg';
+  const sizeWrap = document.createElement('div');
+  sizeWrap.className = 'field';
+  const sizeLabel = document.createElement('label');
+  sizeLabel.textContent = 'Tamanho do botão';
+  sizeWrap.appendChild(sizeLabel);
+  const sizeRow = document.createElement('div');
+  sizeRow.className = 'size-picker';
+  const sizeBtns = [];
+  [['sm', 'Pequeno'], ['md', 'Médio'], ['lg', 'Grande']].forEach(([v, l]) => {
+    const sb = document.createElement('button');
+    sb.type = 'button';
+    sb.className = 'size-opt' + (v === size ? ' active' : '');
+    sb.innerHTML = `<span class="size-swatch size-${v}"></span><span>${l}</span>`;
+    sb.onclick = () => {
+      size = v;
+      sizeBtns.forEach((x) => x.classList.remove('active'));
+      sb.classList.add('active');
+    };
+    sizeRow.appendChild(sb);
+    sizeBtns.push(sb);
+  });
+  sizeWrap.appendChild(sizeRow);
+  body.appendChild(sizeWrap);
+
   // Editor de passos
   const stepsLabel = document.createElement('label');
   stepsLabel.textContent = 'Passos (executados em ordem)';
@@ -456,6 +532,29 @@ function editButton(prof, g, id) {
     top.appendChild(del);
     row.appendChild(top);
     row.appendChild(stepFields(st, i));
+
+    // Delay opcional após este passo (evita ter que inserir um passo Delay à parte).
+    if (st.type !== 'delay') {
+      const delayRow = document.createElement('div');
+      delayRow.className = 'step-delay';
+      const delayLabel = document.createElement('label');
+      delayLabel.textContent = 'Delay depois deste passo';
+      const delayInput = document.createElement('input');
+      delayInput.type = 'number';
+      delayInput.min = '0';
+      const defaultMs = (config.settings && config.settings.stepDelayMs) || 30;
+      delayInput.placeholder = 'padrão: ' + defaultMs + 'ms';
+      if (st.delayAfter != null) delayInput.value = st.delayAfter;
+      delayInput.oninput = () => {
+        const v = delayInput.value.trim();
+        if (v === '') delete st.delayAfter;
+        else st.delayAfter = parseInt(v, 10);
+      };
+      delayRow.appendChild(delayLabel);
+      delayRow.appendChild(delayInput);
+      row.appendChild(delayRow);
+    }
+
     return row;
   }
 
@@ -577,10 +676,11 @@ function editButton(prof, g, id) {
     b.label = label.value.trim();
     b.emoji = emoji;
     b.color = color.value;
+    b.size = size;
     b.steps = steps;
     if (isNew) g.buttons.push(b);
     saveConfig().then(render);
-  });
+  }, { closeOnOverlay: false });
 }
 
 function miniBtn(ic, onclick) {
@@ -596,6 +696,92 @@ function deleteButton(g, id) {
   if (!confirm('Excluir esta macro?')) return;
   g.buttons = g.buttons.filter((b) => b.id !== id);
   saveConfig().then(render);
+}
+
+// ---------- Teclado ao vivo ----------
+function openLiveTyping() {
+  const prof = activeProfile();
+  const body = document.createElement('div');
+  body.style.display = 'flex';
+  body.style.flexDirection = 'column';
+  body.style.gap = '12px';
+
+  const hint = document.createElement('div');
+  hint.className = 'hint';
+  hint.textContent = 'Digite abaixo — o que você escrever é reproduzido no PC quase em tempo real.';
+  body.appendChild(hint);
+
+  const ta = document.createElement('textarea');
+  ta.rows = 6;
+  ta.placeholder = 'Comece a digitar...';
+  ta.setAttribute('autocapitalize', 'off');
+  ta.setAttribute('autocorrect', 'off');
+  ta.spellcheck = false;
+  body.appendChild(ta);
+
+  const actions = document.createElement('div');
+  actions.style.display = 'flex';
+  actions.style.gap = '8px';
+  const btnEnter = document.createElement('button');
+  btnEnter.type = 'button';
+  btnEnter.className = 'btn';
+  btnEnter.textContent = 'Enter ⏎';
+  const btnClear = document.createElement('button');
+  btnClear.type = 'button';
+  btnClear.className = 'btn';
+  btnClear.textContent = 'Limpar';
+  actions.appendChild(btnEnter);
+  actions.appendChild(btnClear);
+  body.appendChild(actions);
+
+  const status = document.createElement('div');
+  status.className = 'msg';
+  body.appendChild(status);
+
+  let lastValue = '';
+  let chain = Promise.resolve();
+  let debounceTimer = null;
+
+  function queueSend(steps) {
+    chain = chain.then(async () => {
+      try {
+        const r = await api('/api/execute', {
+          method: 'POST',
+          body: JSON.stringify({ steps, os: (prof && prof.os) || 'windows' }),
+        });
+        status.className = 'msg' + (r.ok ? '' : ' err');
+        status.textContent = r.ok ? '' : 'Falha ao enviar.';
+      } catch (e) {
+        status.className = 'msg err';
+        status.textContent = 'Erro de conexão.';
+      }
+    });
+  }
+
+  function diffAndSend(newValue) {
+    if (newValue === lastValue) return;
+    let common = 0;
+    const minLen = Math.min(newValue.length, lastValue.length);
+    while (common < minLen && newValue[common] === lastValue[common]) common++;
+    const removed = lastValue.length - common;
+    const added = newValue.slice(common);
+    const steps = [];
+    for (let k = 0; k < removed; k++) steps.push({ type: 'combo', keys: ['BACKSPACE'] });
+    if (added) steps.push({ type: 'text', value: added });
+    if (steps.length) queueSend(steps);
+    lastValue = newValue;
+  }
+
+  ta.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => diffAndSend(ta.value), 180);
+  });
+
+  btnEnter.onclick = () => queueSend([{ type: 'combo', keys: ['ENTER'] }]);
+  btnClear.onclick = () => { ta.value = ''; lastValue = ''; ta.focus(); };
+
+  openModal('Teclado ao vivo', body, null, { closeOnOverlay: false, cancelLabel: 'Fechar' });
+  setTimeout(() => ta.focus(), 50); // abre o teclado do celular
 }
 
 // ---------- Menu de opções ----------
@@ -692,6 +878,20 @@ async function init() {
     render();
   };
   $('#btn-menu').onclick = openMenu;
+  $('#btn-livekb').onclick = openLiveTyping;
+  $('#btn-reload').onclick = async () => {
+    const btn = $('#btn-reload');
+    btn.classList.add('spinning');
+    try {
+      await loadConfig();
+      render();
+      toast('Atualizado', 'ok');
+    } catch (e) {
+      toast('Erro ao atualizar', 'err');
+    } finally {
+      btn.classList.remove('spinning');
+    }
+  };
 
   try {
     await loadConfig();
