@@ -1,0 +1,22 @@
+# Firmware baixado (grande, sempre re-baixavel)
+firmware/*.uf2
+
+# Bibliotecas do Adafruit Bundle (copiadas localmente so p/ deploy -include-libs)
+lib/
+
+# Arquivos de runtime do Pico — NUNCA versionar (segredos/estado do dispositivo)
+config.json
+wifi.json
+auth.json
+
+# Script antigo de experimento (MicroPython) com credencial de WiFi em texto puro.
+# Mantido no disco por enquanto, mas fora do controle de versao.
+main.py
+.micropico
+
+# SO
+.DS_Store
+Thumbs.db
+
+# Claude Code
+.claude/

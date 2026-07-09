@@ -1,0 +1,8 @@
+# settings.toml — parametros fixos do firmware.
+#
+# As credenciais de WiFi NAO ficam aqui: sao definidas pelo modo de
+# provisionamento (AP "ControlPainel-Setup") e gravadas em wifi.json na flash.
+#
+# Mantido para ajustes futuros. Edite somente em modo manutencao
+# (jumper GP15->GND no boot). O servidor do painel usa a porta 80
+# (definida no code.py).

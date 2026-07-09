@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Painel de Controle — Configurar WiFi</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="center-screen">
+    <form class="card-auth" id="form">
+      <div class="logo">📶</div>
+      <h1>Configurar WiFi</h1>
+      <p>Informe a rede para o dispositivo se conectar. Ele vai reiniciar em seguida.</p>
+      <div class="field">
+        <label for="ssid">Nome da rede (SSID)</label>
+        <input type="text" id="ssid" autocomplete="off" required>
+      </div>
+      <div class="field">
+        <label for="password">Senha do WiFi</label>
+        <input type="password" id="password" autocomplete="off">
+      </div>
+      <button class="btn primary" type="submit" id="submit">Salvar e reiniciar</button>
+      <div class="msg" id="msg"></div>
+    </form>
+  </div>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+
+    $('form').addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      const msg = $('msg');
+      msg.className = 'msg';
+      const ssid = $('ssid').value.trim();
+      const password = $('password').value;
+      if (!ssid) { msg.className = 'msg err'; msg.textContent = 'Informe o nome da rede.'; return; }
+      $('submit').disabled = true;
+      msg.textContent = 'Salvando...';
+      try {
+        const r = await fetch('/api/wifi', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ssid, password }),
+        });
+        const data = await r.json();
+        if (r.ok && data.ok) {
+          msg.className = 'msg ok';
+          msg.textContent = 'Salvo! Reiniciando o dispositivo. Reconecte-se à sua rede e procure o IP no monitor serial.';
+          fetch('/api/reboot', { method: 'POST' }).catch(() => {});
+        } else {
+          msg.className = 'msg err';
+          msg.textContent = data.error || 'Falha ao salvar.';
+          $('submit').disabled = false;
+        }
+      } catch (e) {
+        msg.className = 'msg err';
+        msg.textContent = 'Erro de conexão.';
+        $('submit').disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

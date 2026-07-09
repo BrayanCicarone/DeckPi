@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Painel de Controle</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- PWA / instalar na tela inicial -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#6366f1">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Painel">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-180.png">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo" data-icon="sliders"></span>
+      <span>Painel de Controle</span>
+    </div>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btn-edit" title="Modo edição" data-icon="edit"></button>
+    <button class="icon-btn" id="btn-theme" title="Tema" data-icon="moon"></button>
+    <button class="icon-btn" id="btn-menu" title="Opções" data-icon="gear"></button>
+  </header>
+
+  <nav class="profiles" id="profiles"></nav>
+
+  <main id="content">
+    <div class="empty"><span class="em">⏳</span>Carregando...</div>
+  </main>
+
+  <div id="modal-root"></div>
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
