@@ -79,6 +79,20 @@ def _do_combo(keys):
     _kbd.release_all()
 
 
+def _repeat(action, step):
+    """Executa `action` (press+release atomico) N vezes com pausa entre elas.
+
+    Cada repeticao e um ciclo completo — nunca deixa a tecla presa, mesmo se
+    `times` for grande ou a execucao for interrompida no meio.
+    """
+    times = max(1, int(step.get("times", 1)))
+    gap = max(0, int(step.get("repeatDelayMs", 40))) / 1000
+    for n in range(times):
+        action()
+        if n < times - 1:
+            time.sleep(gap)
+
+
 def _do_launch(target, os_name, method="search"):
     """Abre um programa emulando as teclas do sistema operacional."""
     os_name = (os_name or "windows").lower()
@@ -124,13 +138,13 @@ def run_steps(steps, os_name="windows", default_delay_ms=30, launch_method="sear
             if kind == "text":
                 _layout.write(step.get("value", ""))
             elif kind == "combo":
-                _do_combo(step.get("keys", []))
+                _repeat(lambda: _do_combo(step.get("keys", [])), step)
             elif kind == "delay":
                 time.sleep(int(step.get("ms", 0)) / 1000)
             elif kind == "media":
                 code = MEDIA_MAP.get(str(step.get("key", "")).upper())
                 if code is not None:
-                    _cc.send(code)
+                    _repeat(lambda: _cc.send(code), step)
             elif kind == "launch":
                 _do_launch(
                     step.get("target", ""),

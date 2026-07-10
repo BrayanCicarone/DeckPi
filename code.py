@@ -5,7 +5,9 @@
 #   2. Em modo AP: serve setup.html + POST /api/wifi (salva e reinicia).
 #   3. Em modo station: serve o painel (/www) + API protegida por sessao.
 
+import gc
 import json
+import time
 
 import microcontroller
 import socketpool
@@ -227,8 +229,38 @@ else:
 # --- Loop principal -------------------------------------------------------
 print("[server] iniciando em http://%s (modo: %s)" % (ip, mode))
 server.start(str(ip), port=80)
+
+WIFI_CHECK_INTERVAL = 15  # segundos entre verificacoes de conectividade
+_last_wifi_check = time.monotonic()
+
 while True:
     try:
         server.poll()
     except Exception as exc:
         print("[server] erro no poll:", exc)
+
+    # Watchdog de WiFi: em modo station, detecta queda de conexao e
+    # reconecta sozinho (sem isso o Pico fica preso servindo uma rede
+    # morta ate alguem religar manualmente).
+    if mode == "station":
+        now = time.monotonic()
+        if now - _last_wifi_check > WIFI_CHECK_INTERVAL:
+            _last_wifi_check = now
+            if not wifi.radio.connected:
+                print("[wifi] conexao perdida, tentando reconectar...")
+                new_ip = wifi_mgr.reconnect()
+                if new_ip:
+                    if new_ip != ip:
+                        ip = new_ip
+                        try:
+                            server.stop()
+                        except Exception as exc:
+                            print("[server] erro ao parar:", exc)
+                        server.start(str(ip), port=80)
+                    print("[wifi] reconectado! IP:", ip)
+                else:
+                    print("[wifi] falha ao reconectar; tentara novamente.")
+
+    # Coleta de lixo periodica: evita fragmentacao de memoria em sessoes
+    # longas (o Pico tem RAM limitada e faz muitas alocacoes de JSON).
+    gc.collect()

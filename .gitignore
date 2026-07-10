@@ -8,6 +8,7 @@ lib/
 config.json
 wifi.json
 auth.json
+sessions.json
 
 # Script antigo de experimento (MicroPython) com credencial de WiFi em texto puro.
 # Mantido no disco por enquanto, mas fora do controle de versao.

@@ -558,6 +558,30 @@ function editButton(prof, g, id) {
     return row;
   }
 
+  // Campo "Repetir X vezes" (combo/mídia) — cada repetição é um press+release
+  // completo, então nunca fica tecla presa, mesmo repetindo muitas vezes.
+  function repeatField(st, i) {
+    const box = document.createElement('div');
+    box.className = 'repeat-field';
+    const label = document.createElement('label');
+    label.textContent = 'Repetir';
+    const inp = document.createElement('input');
+    inp.type = 'number';
+    inp.min = '1';
+    inp.value = st.times || 1;
+    inp.oninput = () => {
+      const v = parseInt(inp.value, 10);
+      if (!v || v <= 1) delete steps[i].times;
+      else steps[i].times = v;
+    };
+    const suffix = document.createElement('span');
+    suffix.textContent = 'vez(es)';
+    box.appendChild(label);
+    box.appendChild(inp);
+    box.appendChild(suffix);
+    return box;
+  }
+
   function stepFields(st, i) {
     const wrap = document.createElement('div');
     if (st.type === 'text') {
@@ -593,6 +617,7 @@ function editButton(prof, g, id) {
       hint.className = 'hint';
       hint.textContent = 'Clique nas teclas ou digite. Para letras/números, digite (ex.: CTRL+C).';
       wrap.appendChild(hint);
+      wrap.appendChild(repeatField(st, i));
     } else if (st.type === 'delay') {
       const inp = document.createElement('input');
       inp.type = 'number'; inp.min = '0';
@@ -611,6 +636,7 @@ function editButton(prof, g, id) {
       steps[i].key = steps[i].key || MEDIA_KEYS[0];
       sel.onchange = () => { steps[i].key = sel.value; };
       wrap.appendChild(sel);
+      wrap.appendChild(repeatField(st, i));
     } else if (st.type === 'launch') {
       const inp = document.createElement('input');
       inp.value = st.target || '';

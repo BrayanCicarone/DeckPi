@@ -1,15 +1,6 @@
 /* dnd.js — arrastar para reordenar (qualquer lista) e redimensionar (macros).
    Usa Pointer Events (funciona com mouse E touch, inclusive iOS Safari). */
 
-// Ao soltar um arraste, o navegador pode sintetizar um "click" no elemento
-// que ficou embaixo do cursor (já que o item arrastado tem pointer-events:
-// none). Isso evita que esse clique fantasma abra/edite algo indevido.
-function suppressNextClick() {
-  const handler = (e) => { e.stopPropagation(); e.preventDefault(); };
-  window.addEventListener('click', handler, { capture: true, once: true });
-  setTimeout(() => window.removeEventListener('click', handler, { capture: true }), 400);
-}
-
 // Torna `itemEl` arrastável através de `handleEl` dentro de `containerEl`.
 // Durante o arraste, o item vira um "clone flutuante" (position:fixed) e um
 // placeholder tracejado marca o lugar; ao soltar, o item já fica na nova
@@ -81,7 +72,6 @@ function makeDraggable(handleEl, itemEl, containerEl, onDrop) {
       itemEl.style.left = '';
       itemEl.style.top = '';
       itemEl.style.pointerEvents = '';
-      suppressNextClick();
       onDrop();
     }
 
@@ -125,7 +115,6 @@ function makeResizable(handleEl, cardEl, onResize) {
       window.removeEventListener('pointermove', onMove);
       window.removeEventListener('pointerup', onUp);
       cardEl.classList.remove('resizing');
-      suppressNextClick();
       onResize(cardEl.dataset.size);
     }
     window.addEventListener('pointermove', onMove);

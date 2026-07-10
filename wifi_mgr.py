@@ -52,6 +52,15 @@ def _try_station(ssid, password):
     return None
 
 
+def reconnect():
+    """Tenta reconectar usando as credenciais salvas (watchdog). Retorna o IP
+    (str) em caso de sucesso, ou None."""
+    ssid, password = load_credentials()
+    if not ssid:
+        return None
+    return _try_station(ssid, password)
+
+
 def start_ap():
     """Sobe o Access Point de provisionamento e retorna o IP do portal."""
     print("[wifi] subindo AP de setup:", AP_SSID)

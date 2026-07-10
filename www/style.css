@@ -162,6 +162,11 @@ button { font-family: inherit; cursor: pointer; }
 .key-palette button:hover { border-color: var(--accent); color: var(--accent-h); }
 .hint { font-size: .75rem; color: var(--text-dim); margin-top: 6px; }
 
+.repeat-field { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+.repeat-field label { font-size: .78rem; color: var(--text-dim); font-weight: 600; }
+.repeat-field input { width: 64px; padding: 6px 8px; font-size: 16px; }
+.repeat-field span { font-size: .78rem; color: var(--text-dim); }
+
 /* ---------- Botoes de texto ---------- */
 .btn {
   display: inline-flex;
@@ -376,7 +381,8 @@ input, select, textarea {
   border: 1px solid var(--border);
   background: var(--bg-elev);
   color: var(--text);
-  font-size: .95rem;
+  /* >=16px evita o zoom automatico do iOS Safari ao focar o campo */
+  font-size: 16px;
 }
 input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent); border-color: var(--accent); }
 textarea { resize: vertical; min-height: 64px; }
@@ -437,7 +443,7 @@ input[type="color"] { padding: 4px; height: 42px; }
 .step-delay input {
   width: 100px;
   padding: 5px 8px;
-  font-size: .82rem;
+  font-size: 16px;
 }
 .step .mini { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text); display: grid; place-items: center; }
 .step .mini svg { width: 14px; height: 14px; }
